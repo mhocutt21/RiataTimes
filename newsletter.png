@@ -1,0 +1,24 @@
+const progressBar = document.getElementById("progressBar");
+const toggleHotspots = document.getElementById("toggleHotspots");
+const toggleHotspotsIntro = document.getElementById("toggleHotspotsIntro");
+
+function updateProgress() {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+}
+
+function toggleLinks() {
+  document.body.classList.toggle("show-hotspots");
+  const isShowing = document.body.classList.contains("show-hotspots");
+  toggleHotspots.textContent = isShowing ? "Hide links" : "Show links";
+  toggleHotspotsIntro.textContent = isShowing ? "Hide Clickable Areas" : "Preview Clickable Areas";
+}
+
+window.addEventListener("scroll", updateProgress, { passive: true });
+window.addEventListener("resize", updateProgress);
+toggleHotspots.addEventListener("click", toggleLinks);
+toggleHotspotsIntro.addEventListener("click", toggleLinks);
+
+updateProgress();
